@@ -156,6 +156,7 @@ internal class RUMUserActionScope: RUMScope, RUMContextProvider {
                 type: actionType.toRUMDataFormat
             ),
             application: .init(id: self.context.rumApplicationID),
+            buildVersion: nil,
             ciTest: dependencies.ciTest,
             connectivity: .init(context: context),
             context: .init(contextInfo: attributes),

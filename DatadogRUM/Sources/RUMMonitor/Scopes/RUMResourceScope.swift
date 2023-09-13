@@ -147,6 +147,7 @@ internal class RUMResourceScope: RUMScope {
                 .init(id: .string(value: rumUUID.toRUMDataFormat))
             },
             application: .init(id: self.context.rumApplicationID),
+            buildVersion: nil,
             ciTest: dependencies.ciTest,
             connectivity: .init(context: context),
             context: .init(contextInfo: attributes),
@@ -180,6 +181,7 @@ internal class RUMResourceScope: RUMScope {
                         start: metric.start.timeIntervalSince(resourceStartTime).toInt64Nanoseconds
                     )
                 },
+                graphql: nil,
                 id: resourceUUID.toRUMDataFormat,
                 method: resourceHTTPMethod,
                 provider: resourceEventProvider,
@@ -237,6 +239,7 @@ internal class RUMResourceScope: RUMScope {
                 .init(id: .string(value: rumUUID.toRUMDataFormat))
             },
             application: .init(id: self.context.rumApplicationID),
+            buildVersion: nil,
             ciTest: dependencies.ciTest,
             connectivity: .init(context: context),
             context: .init(contextInfo: attributes),
