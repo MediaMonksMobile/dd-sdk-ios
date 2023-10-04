@@ -435,3 +435,11 @@ extension DatadogCore: Flushable {
         }
     }
 }
+
+extension DatadogCore: Flushable2 {
+    func flush(completion: @escaping () -> Void) {
+//        features.values.compactMap { $0 as? Flushable }.flush(completion: completion)
+    }
+
+
+}
