@@ -17,7 +17,13 @@ public protocol __URLSessionDelegateProviding: URLSessionDelegate {
     /// - `func urlSession(_:task:didFinishCollecting:)`
     /// - `func urlSession(_:task:didCompleteWithError:)`
     /// - `func urlSession(_:dataTask:didReceive:)`
-    var ddURLSessionDelegate: DatadogURLSessionDelegate { get }
+    var ddURLSessionDelegate: DatadogURLSessionDelegate? { get }
+    // The above is optional to work around a conflict with Glassbox SDK which wraps all `URLSessionDelegate`s
+    // in the app with their own class either losing conformance to `__URLSessionDelegateProviding` and disabling
+    // DD instrumentation on all sessions or, since v6.686.0, conforming to it even when wrapping targets that do not
+    // to work around this issue. The call to `ddURLSessionDelegate` would return `nil` in the latter case and would
+    // not do no harm in Debug correctly skipping the call, however optimized builds ("Release") would eliminate
+    // the check for `nil` unless we declare it optional.
 }
 
 /// The `URLSession` delegate object which enables network requests instrumentation. **It must be
@@ -108,5 +114,5 @@ open class DatadogURLSessionDelegate: NSObject, URLSessionDataDelegate {
 }
 
 extension DatadogURLSessionDelegate: __URLSessionDelegateProviding {
-    public var ddURLSessionDelegate: DatadogURLSessionDelegate { self }
+    public var ddURLSessionDelegate: DatadogURLSessionDelegate? { self }
 }
