@@ -208,6 +208,16 @@ workflows:
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/Datadog-ios-unit-tests.html"
     - xcode-test:
+        title: Run unit tests for URLSessionInstrumentation - iOS Simulator
+        run_if: '{{enveq "DD_RUN_UNIT_TESTS" "1"}}'
+        inputs:
+        - scheme: URLSessionInstrumentationTests iOS
+        - destination: platform=iOS Simulator,name=iPhone 11,OS=latest
+        - is_clean_build: 'no'
+        - generate_code_coverage_files: 'yes'
+        - project_path: Datadog.xcworkspace
+        - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/URLSessionInstrumentation-ios-unit-tests.html"
+    - xcode-test:
         title: Run unit tests for DatadogCrashReporting - iOS Simulator
         run_if: '{{enveq "DD_RUN_UNIT_TESTS" "1"}}'
         inputs:
@@ -226,6 +236,16 @@ workflows:
         - generate_code_coverage_files: 'yes'
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/Datadog-tvos-unit-tests.html"
+    - xcode-test:
+        title: Run unit tests for URLSessionInstrumentation - tvOS Simulator
+        run_if: '{{enveq "DD_RUN_UNIT_TESTS" "1"}}'
+        inputs:
+        - scheme: URLSessionInstrumentationTests tvOS
+        - destination: platform=tvOS Simulator,name=Apple TV,OS=latest
+        - is_clean_build: 'no'
+        - generate_code_coverage_files: 'yes'
+        - project_path: Datadog.xcworkspace
+        - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/URLSessionInstrumentation-tvos-unit-tests.html"
     - xcode-test:
         title: Run unit tests for DatadogCrashReporting - tvOS Simulator
         run_if: '{{enveq "DD_RUN_UNIT_TESTS" "1"}}'
@@ -261,7 +281,7 @@ workflows:
         - content: |
             #!/usr/bin/env zsh
 
-            # The `SRSnapshotTests.xcworkspace` depends on `dd-sdk-ios/Package.swift` but requires the `dd-sdk-ios/TestUtilities` library, 
+            # The `SRSnapshotTests.xcworkspace` depends on `dd-sdk-ios/Package.swift` but requires the `dd-sdk-ios/TestUtilities` library,
             # which is not defined statically in the root package. To add it dynamically, we leverage the `DD_TEST_UTILITIES_ENABLED` ENV
             # variable respected by the main package. Here we export it so it is available in next CI steps:
             envman add --key DD_TEST_UTILITIES_ENABLED --value '1'
