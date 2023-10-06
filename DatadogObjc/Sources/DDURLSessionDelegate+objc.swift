@@ -9,6 +9,7 @@ import DatadogCore
 import DatadogInternal
 
 @objc
+@available(*, deprecated, message: "Use URLSessionInstrumentation instead.")
 open class DDNSURLSessionDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate, __URLSessionDelegateProviding {
     var swiftDelegate: DDURLSessionDelegate
     public var ddURLSessionDelegate: DatadogURLSessionDelegate {
